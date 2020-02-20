@@ -1,0 +1,70 @@
+﻿@model List<AVcompanyWeb.Models.Product>
+@{
+
+    AVcompanyWeb.ViewModels.MessageViewModel message = new AVcompanyWeb.ViewModels.MessageViewModel();
+    message = TempData["Message"] as AVcompanyWeb.ViewModels.MessageViewModel;
+}
+
+
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <span class="icon-puzzle"></span><h4 class="text-themecolor" style="display:inline;padding-left:5px;">Listado de Productos</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item active">Productos</li>
+            </ol>
+            <a href="@Url.Action("Create","Product")" id="newCategory" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i>  Crear Nuevo</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-2 col-md-6 col-center-block">
+        <form>
+            <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected"><input id="text_search" type="search" value=""  placeholder="Ingrese texto a buscar"  name="tch3_22" data-bts-button-down-class="btn btn-secondary btn-outline" data-bts-button-up-class="btn btn-secondary btn-outline" class="form-control"><button class="btn btn-secondary btn-outline bootstrap-touchspin-up" type="button"><span class="fa fa-search"></span></button></div>
+        </form>
+    </div>
+</div>
+<div class="content-products">
+    @Html.Partial("_ListProducts", Model)
+</div>
+
+
+
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+                
+        
+            
+            $('#text_search').keyup(function () {
+
+                var text_to_search = $(this).val();
+                $.get("@Url.Action("Search","Product")", { text: text_to_search }, function (data) {
+                    console.log("dsd");
+                    console.log(data);
+                    $('.content-products').empty();
+                    $('.content-products').html(data);
+                }).keyup();
+            });
+        });
+
+        $('.delete-product').click(function () {
+            var product_id = $(this).attr('product-id');
+            $.post("@Url.Action("Delete","Product")", { id: product_id }, function (data) {
+                $('.content-products').empty();
+                $('.content-products').html(data);
+            })
+
+        });
+
+    </script>
+    }
+
+
+

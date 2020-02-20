@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AVcompanydbModelStoreContainer" CdmEntityContainer="AVcompanydbEntities">
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="AVcompanydbModel.Category">
+        <MappingFragment StoreEntitySet="Categories">
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="abbreviation" ColumnName="abbreviation" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriceProducts">
+      <EntityTypeMapping TypeName="AVcompanydbModel.PriceProduct">
+        <MappingFragment StoreEntitySet="PriceProducts">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="productId" ColumnName="productId" />
+          <ScalarProperty Name="priceTypeId" ColumnName="priceTypeId" />
+          <ScalarProperty Name="priceWithoutIGV" ColumnName="priceWithoutIGV" />
+          <ScalarProperty Name="priceWithIGV" ColumnName="priceWithIGV" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriceTypes">
+      <EntityTypeMapping TypeName="AVcompanydbModel.PriceType">
+        <MappingFragment StoreEntitySet="PriceTypes">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="AVcompanydbModel.Product">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="woodTypeId" ColumnName="woodTypeId" />
+          <ScalarProperty Name="subCategoryId" ColumnName="subCategoryId" />
+          <ScalarProperty Name="woodProtectionTypeId" ColumnName="woodProtectionTypeId" />
+          <ScalarProperty Name="identifierCode" ColumnName="identifierCode" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="width" ColumnName="width" />
+          <ScalarProperty Name="height" ColumnName="height" />
+          <ScalarProperty Name="depth" ColumnName="depth" />
+          <ScalarProperty Name="weight" ColumnName="weight" />
+          <ScalarProperty Name="stock" ColumnName="stock" />
+          <ScalarProperty Name="manufacturingTime" ColumnName="manufacturingTime" />
+          <ScalarProperty Name="isExclusive" ColumnName="isExclusive" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubCategories">
+      <EntityTypeMapping TypeName="AVcompanydbModel.SubCategory">
+        <MappingFragment StoreEntitySet="SubCategories">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Uploads">
+      <EntityTypeMapping TypeName="AVcompanydbModel.Upload">
+        <MappingFragment StoreEntitySet="Uploads">
+          <ScalarProperty Name="srcImage" ColumnName="srcImage" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="productId" ColumnName="productId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="locationPath" ColumnName="locationPath" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WoodProtectionTypes">
+      <EntityTypeMapping TypeName="AVcompanydbModel.WoodProtectionType">
+        <MappingFragment StoreEntitySet="WoodProtectionTypes">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WoodTypes">
+      <EntityTypeMapping TypeName="AVcompanydbModel.WoodType">
+        <MappingFragment StoreEntitySet="WoodTypes">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parameters">
+      <EntityTypeMapping TypeName="AVcompanydbModel.Parameter">
+        <MappingFragment StoreEntitySet="Parameters">
+          <ScalarProperty Name="value" ColumnName="value" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

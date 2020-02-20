@@ -1,0 +1,54 @@
+﻿@model AVcompanyWeb.ViewModels.ProductViewModel
+
+
+<div class="table-responsive">
+    <table class="table table-hover table-sm table-bordered" style="width:0%;margin:auto">
+        <thead>
+            <tr>
+                <th style="text-align:center;background-color:#4F5467;color:white" >Tipo de Precio</th>
+                <th style="text-align:center;background-color:#4F5467;color:white">Sin IGV</th>
+                <th style="text-align:center;background-color:#4F5467;color:white">Con IGV</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.priceTypes)
+            {
+                double amount = Convert.ToDouble(Model.priceProducts.Where(x => x.priceTypeId == item.id).FirstOrDefault().priceWithoutIGV);
+                double amountWithIgv = Convert.ToDouble(Model.priceProducts.Where(x => x.priceTypeId == item.id).FirstOrDefault().priceWithIGV);
+                int id = Convert.ToInt32(Model.priceProducts.Where(x => x.priceTypeId == item.id).FirstOrDefault().id);
+
+            <tr>
+                <td style="text-align:center"><label class="price-name">@item.name</label></td>
+                <td style="text-align:center">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="border-style:hidden;background-color:white">S/.</span>
+                        </div>
+                        <input type="text" class="form-control price-input" value="@amount" data-id="@id" data-price="@item.id" data-product="@Model.id" aria-label="Amount (to the nearest dollar)" style="border-style:hidden;text-align:center">
+                    </div>
+                </td>
+                <td style="text-align:center">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="border-style:hidden;background-color:white">S/.</span>
+                        </div>
+                        <input type="text" class="form-control price-witout-igv"  id="withIGV_@item.id" disabled value="@amountWithIgv" data-id="@id" data-price="@item.id" data-product="@Model.id" aria-label="Amount (to the nearest dollar)" style="border-style:hidden;text-align:center;background-color:white">
+                    </div>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+</br>
+<div class="form-actions">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="offset-sm-5 col-md-7">
+                    <button type="button"  id="update_prices" class="btn btn-success" style="background-color:#4F5467;border-color:#4F5467"><i class="fa fa-check"></i>Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

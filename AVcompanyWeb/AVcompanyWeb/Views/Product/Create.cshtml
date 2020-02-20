@@ -1,0 +1,419 @@
+﻿@model AVcompanyWeb.ViewModels.ProductViewModel
+@{
+    //ViewBag.Title = "Products";
+    double igv = Convert.ToDouble(ViewBag.Igv);
+}
+
+
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Form Wizards</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item active">Productos</li>
+            </ol>
+            <button type="button" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Crear Nuevo</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body wizard-content">
+                <h4 class="card-title">Step wizard</h4>
+                <h6 class="card-subtitle">You can find the <a href="http://www.jquery-steps.com/" target="_blank">offical website</a></h6>
+                <div action="#" class="tab-wizard wizard-circle">
+                    </br>
+                    <!-- Step 1 -->
+                    <h6>Información</h6>
+                    <section>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="white-box">
+                                    <form class="form">
+                                        <div class="form-group row">
+                                            <label for="example-text-input" class="col-2 col-form-label">Código</label>
+                                            <div class="col-10">
+                                                <input type="text"  class="form-control" id="identifierCode" disabled style="background-color:#fff">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="example-search-input" class="col-2 col-form-label">Nombre</label>
+                                            <div class="col-10">
+                                                <input type="text" class="form-control" id="name" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="example-email-input" class="col-2 col-form-label">Categoría</label>
+                                            <div class="col-10">
+                                                <select class="custom-select" required id="category">
+                                                    <option value="" disabled selected>Open this select menu</option>
+                                                    @foreach (var item in Model.categories)
+                                                    {
+                                                        <option value="@item.id">@item.name</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="example-url-input" class="col-2 col-form-label">Sub-Categoría</label>
+                                            <div class="col-10">
+                                                <select class="custom-select" required id="subCategoryId">
+                                                    <option value="" disabled selected>Open this select menu</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="example-tel-input" class="col-2 col-form-label">Tipo de Madera</label>
+                                            <div class="col-10">
+                                                <select class="custom-select" required id="woodTypeId">
+                                                    <option disabled selected>Open this select menu</option>
+                                                    @foreach (var item in Model.woodTypes)
+                                                    {
+                                                        <option value="@item.id">@item.description</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="example-password-input" class="col-2 col-form-label">Tipo de Acabado</label>
+                                            <div class="col-10">
+                                                <select class="custom-select" required id="woodProtectionTypeId">
+                                                    <option value="" disabled selected>Open this select menu</option>
+                                                    @foreach (var item in Model.woodProtectionTypes)
+                                                    {
+                                                        <option value="@item.id">@item.name</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="example-number-input" class="col-2 col-form-label">Ancho</label>
+                                            <div class="col-10">
+                                                <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected"><input type="number" class="form-control" id="width"  data-bts-button-down-class="btn btn-secondary btn-outline" data-bts-button-up-class="btn btn-secondary btn-outline"><span class="input-group-addon bootstrap-touchspin-postfix input-group-append"><span class="input-group-text" style="background-color: #4F5467;color: white;">cm</span></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="example-datetime-local-input" class="col-2 col-form-label">Alto</label>
+                                            <div class="col-10">
+                                                <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected"><input type="number" class="form-control" id="height"  data-bts-button-down-class="btn btn-secondary btn-outline" data-bts-button-up-class="btn btn-secondary btn-outline"><span class="input-group-addon bootstrap-touchspin-postfix input-group-append"><span class="input-group-text" style="background-color: #4F5467;color: white;">cm</span></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="example-date-input" class="col-2 col-form-label">Profundidad</label>
+                                            <div class="col-10">
+                                                <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected"><input type="number" class="form-control" id="depth"  data-bts-button-down-class="btn btn-secondary btn-outline" data-bts-button-up-class="btn btn-secondary btn-outline"><span class="input-group-addon bootstrap-touchspin-postfix input-group-append"><span class="input-group-text" style="background-color: #4F5467;color: white;">cm</span></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="example-month-input" class="col-2 col-form-label">Peso</label>
+                                            <div class="col-10">
+                                                <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected"><input type="number" class="form-control" id="weight"  data-bts-button-down-class="btn btn-secondary btn-outline" data-bts-button-up-class="btn btn-secondary btn-outline"><span class="input-group-addon bootstrap-touchspin-postfix input-group-append"><span class="input-group-text" style="background-color: #4F5467;color: white;">gr</span></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="example-week-input" class="col-2 col-form-label">Tiempo de Fabricación</label>
+                                            <div class="col-10">
+                                                <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected"><input type="number" class="form-control" id="manufacturingTime"  data-bts-button-down-class="btn btn-secondary btn-outline" data-bts-button-up-class="btn btn-secondary btn-outline"><span class="input-group-addon bootstrap-touchspin-postfix input-group-append"><span class="input-group-text" style="background-color: #4F5467;color: white;">gr</span></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="example-time-input" class="col-2 col-form-label">Exclusividad</label>
+                                            <div class="col-10">
+                                                <div class="input-group">
+                                                    <ul class="icheck-list">
+                                                        <li>
+                                                            <div class="icheckbox_square-red" style="position: relative;">
+                                                                <input type="checkbox"  class="check" id="isExclusive" data-checkbox="icheckbox_square-red" style="position: absolute; opacity: 0;">
+                                                                <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                                            </div>
+                                                           
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="example-time-input" class="col-2 col-form-label">Descripción</label>
+                                            <div class="col-10">
+                                                <textarea name="description" id="description" rows="6" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Step 2 -->
+                    <h6>Imágenes</h6>
+                    <section>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Dropzone</h4>
+                                            <h6 class="card-subtitle">For multiple file upload put class <code>.dropzone</code> to form.</h6>
+                                            <form action="#" class="dropzone dz-clickable" id="dropzoneImages">
+                                                <input type="file" style="display: none" id="filesUpload" multiple />
+                                                <div class="dz-default dz-message">
+                                                    <span>Drop files here to upload</span>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Step 3 -->
+                    <h6>Precios</h6>
+                    <section>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover table-sm table-bordered" style="width:0%;margin:auto">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;background-color:#4F5467;color:white">Tipo de Precio</th>
+                                        <th style="text-align:center;background-color:#4F5467;color:white">Sin IGV</th>
+                                        <th style="text-align:center;background-color:#4F5467;color:white">Con IGV</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.priceTypes)
+                                    {
+
+                                        <tr>
+                                            <td style="text-align:center"><label class="price-name">@item.name</label></td>
+                                            <td style="text-align:center">
+                                                <div class="input-group mb-2">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" style="border-style:hidden;background-color:white">S/.</span>
+                                                    </div>
+                                                    <input type="text" class="form-control price-input" data-price="@item.id" data-product="@Model.id" aria-label="Amount (to the nearest dollar)" style="border-style:hidden;text-align:center">
+                                                </div>
+                                            </td>
+                                            <td style="text-align:center">
+                                                <div class="input-group mb-2">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" style="border-style:hidden;background-color:white">S/.</span>
+                                                    </div>
+                                                    <input type="text" class="form-control price-witout-igv" id="withIGV_@item.id" disabled  data-price="@item.id" data-product="@Model.id" aria-label="Amount (to the nearest dollar)" style="border-style:hidden;text-align:center;background-color:white">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                    </br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        var dropzoneFiles;
+
+        $(document).ready(function () {
+
+            Dropzone.forElement(".dropzone").options.autoProcessQueue = false;
+            Dropzone.forElement(".dropzone").options.parallelUploads = 30;
+            Dropzone.forElement(".dropzone").options.uploadMultiple = true;
+
+            Dropzone.forElement(".dropzone").on("queuecomplete", function (file) {
+                console.log("success files");
+                window.location = "@Url.Action("List","Product")";           
+            });
+
+            $('.icheckbox_square-red').hover(function () {
+                $(this).addClass('hover');
+            })
+
+            $('.icheckbox_square-red').mouseout(function () {
+                $(this).removeClass('hover');
+            })
+
+            $('.icheckbox_square-red').click(function () {
+                if ($(this).hasClass("checked")) {
+                    $(this).removeClass('checked');
+                    $('#isExclusive').val(false);
+                } else {
+                    $(this).addClass('checked');
+                    $('#isExclusive').val(true);
+                }
+                
+            })
+
+
+        /*Get SubCategories and identifierCode*/
+        $('#category').change(function () {
+
+            var categoryId = $(this).val();
+
+            $.ajax({
+                method: 'get',
+                data: { categoryId : categoryId },            
+                url: '@Url.Action("GetSubCategories","Product")',
+                success: function (response) {
+                    console.log(response)
+
+                    $('#subCategoryId').empty();
+                    $('#subCategoryId').append("<option disabled selected>Open this select menu</option>")
+                    $.each(response, function (index, value) {
+                        var option = document.createElement("option");
+                        console.log(response[index].name);
+                        option.text = response[index].name;
+                        option.value = response[index].id;                       
+                        $('#subCategoryId').append(option);
+
+                    })
+                } 
+            })
+
+
+            $.ajax({
+                method: 'get',
+                data: { categoryId : categoryId },            
+                url: '@Url.Action("GetIdentifierCode","Product")',
+                success: function (response) {
+                    console.log(response);
+                        $('#identifierCode').val(response);
+                } 
+            })
+
+
+
+        })
+        /**/
+
+        });
+
+        //Custom design form example
+        $(".tab-wizard").steps({
+            headerTag: "h6",
+            bodyTag: "section",
+            transitionEffect: "fade",
+            titleTemplate: '<span class="step">#index#</span> #title#',
+            labels: {
+                finish: 'Submit'
+            },
+            onFinished: function (event, currentIndex) {
+                ProcessProduct()
+            }
+        });
+
+
+        function ProcessProduct() {
+
+            var product = new FormData();
+           
+            product.append("name", $('#name').val());
+            product.append("identifierCode", $('#identifierCode').val());
+            product.append("category", $('#category').val());
+            product.append("width", $('#width').val());
+            product.append("height", $('#height').val());
+            product.append("depth", $('#depth').val());
+            product.append("weight", $('#weight').val());
+            product.append("manufacturingTime", $('#manufacturingTime').val());
+            product.append("description", $('#description').val());
+            product.append("woodTypeId", $('#woodTypeId').val());
+            product.append("woodProtectionTypeId", $('#woodProtectionTypeId').val());
+            product.append("categoryId", $('#categoryId').val());
+            product.append("subCategoryId", $('#subCategoryId').val());
+            product.append("isExclusive", $('#isExclusive').val());
+
+
+            console.log($('#isExclusive').val());
+            var priceProducts = [];
+            
+           
+
+            $.ajax({
+                method: 'post',
+                processData: false,
+                contentType: false,
+                cache: false,
+                data: product,            
+                url: '@Url.Action("Save","Product")',
+                success: function (data) {
+                    console.log(data);
+
+                    $.each($('.price-input'), function (index, value) {
+                        priceProducts.push({
+                            id: 0,
+                            productId: data,
+                            priceTypeId: $(this).attr("data-price"),
+                            priceWithoutIGV: $(this).val(),
+                            priceWithIGV: $(this).val() * @igv,
+                            isActive: true
+                        });
+                    });
+
+                    console.log(priceProducts);
+
+                    $.post("@Url.Action("SaveProductPrices","Product")", { productPrices: priceProducts }, function (response) {
+                        if (response == "Success") {
+                            Dropzone.forElement(".dropzone").processQueue();                          
+                        }
+                    });               
+                }
+            });
+        }
+
+        $(".price-input").change(function () {
+            var id = $(this).attr("data-price");
+            var amount = $(this).val() * @igv;
+            console.log(amount);
+            $("#withIGV_" + id).val(Math.round(amount));
+        });
+
+        var form = $(".validation-wizard").show();
+
+        $(".validation-wizard").steps({
+            headerTag: "h6",
+            bodyTag: "section",
+            transitionEffect: "fade",
+            titleTemplate: '<span class="step">#index#</span> #title#',
+            labels: {
+                finish: "Submit"
+            },
+            onStepChanging: function (event, currentIndex, newIndex) {
+                return currentIndex > newIndex || !(3 === newIndex && Number($("#age-2").val()) < 18) && (currentIndex < newIndex && (form.find(".body:eq(" + newIndex + ") label.error").remove(), form.find(".body:eq(" + newIndex + ") .error").removeClass("error")), form.validate().settings.ignore = ":disabled,:hidden", form.valid())
+            },
+            onFinishing: function (event, currentIndex) {
+                return form.validate().settings.ignore = ":disabled", form.valid()
+            },
+            onFinished: function (event, currentIndex) {
+                swal("Form Submitted!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");
+            }
+        }), $(".validation-wizard").validate({
+            ignore: "input[type=hidden]",
+            errorClass: "text-danger",
+            successClass: "text-success",
+            highlight: function (element, errorClass) {
+                $(element).removeClass(errorClass)
+            },
+            unhighlight: function (element, errorClass) {
+                $(element).removeClass(errorClass)
+            },
+            errorPlacement: function (error, element) {
+                error.insertAfter(element)
+            },
+            rules: {
+                email: {
+                    email: !0
+                }
+            }
+        })
+    </script>
+}
+
+

@@ -1,0 +1,246 @@
+﻿@model AVcompanyWeb.ViewModels.ProductViewModel
+@{
+    double igv = Convert.ToDouble(ViewBag.Igv);
+}
+
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">Gallery</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item active">Gallery</li>
+            </ol>
+            <button type="button" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- Row -->
+<div class="row">
+    <!-- Column -->
+    <!-- Column -->
+    <!-- Column -->
+    <div class="col-lg-12 col-xlg-12 col-md-12">
+        <div class="card">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs profile-tab" role="tablist">
+                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home" role="tab">Detalle Técnico</a> </li>
+                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Galeria</a> </li>
+                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab">Precios</a> </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="home" role="tabpanel">
+                    <div class="card-body technical-details">
+                        @Html.Partial("_TechnicalDetail",Model)
+                    </div>
+                </div>
+                <!--second tab-->
+                <div class="tab-pane" id="profile" role="tabpanel">
+                    <div class="col-md-12">
+                       
+                        <div class="form-group" style="margin-top:20px;">    
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Upload</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="upload" data-product-id="@Model.id" multiple>
+                                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body image-details">
+
+                        @Html.Partial("_DetailsImage", Model)
+                    </div>
+                </div>
+                <div class="tab-pane" id="settings" role="tabpanel">
+                    <div class="card-body price-details">
+                        @Html.Partial("_PriceDetails",Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+</div>
+
+
+@section Scripts
+    {
+    <script>
+        //delete image 
+
+
+        $('.image-details').on('click','.delete',function () {
+            var uploadId = $(this).attr("data-id");
+                console.log(uploadId);
+
+                $.post("@Url.Action("DeleteFile")", { uploadId: uploadId }, function (data) {
+                    console.log("data");
+                    $('.image-details').empty();
+                    $('.image-details').html(data);
+                })
+        })
+
+
+            $('#upload').change(function () {
+                var productId = $(this).attr('data-product-id');
+                var files = $(this).get(0).files;
+
+                var formData = new FormData();
+                formData.append("productId", productId);
+                console.log(files);
+                console.log(productId)
+
+                for (var i = 0; i < files.length; i++) {
+                    formData.append(files[i].name, files[i]);
+                }
+
+                $.ajax({
+                    method: 'post',
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    url: '@Url.Action("InsertFile", "Product")',
+                    success: function (response) {
+                        $('.image-details').empty();
+                        $('.image-details').html(response);
+                    }
+                });
+            });
+
+
+            /*Get SubCategories and identifierCode*/
+            $('#category').change(function () {
+
+                var categoryId = $(this).val();
+
+                $.ajax({
+                    method: 'get',
+                    data: { categoryId: categoryId },
+                    url: '@Url.Action("GetSubCategories","Product")',
+                    success: function (response) {
+                        console.log(response)
+                        $.each(response, function (index, value) {
+                            var option = document.createElement("option");
+                            console.log(response[index].name);
+                            option.text = response[index].name;
+                            option.value = response[index].id;
+                            $('#subCategoryId').append(option);
+                        })
+                    }
+                });
+
+
+                $.ajax({
+                    method: 'get',
+                    data: { categoryId: categoryId },
+                    url: '@Url.Action("GetIdentifierCode","Product")',
+                    success: function (response) {
+                        console.log(response);
+                        $('#identifierCode').val(response);
+                    }
+                })
+            });
+            /**/
+
+            $(".price-input").change(function () {
+                var id = $(this).attr("data-price");
+                
+                var amount = $(this).val() * @igv;
+                console.log(amount);
+                $("#withIGV_" + id).val(Math.round(amount));
+            });
+
+        
+
+
+          $('#update_prices').click(function () {
+                var productPrices = [];
+
+                $.each($('.price-input'), function (index, value) {
+                    productPrices.push({
+                        id: $(this).attr("data-id"),
+                        productId: $(this).attr("data-product"),
+                        priceTypeId: $(this).attr("data-price"),
+                        priceWithoutIGV: $(this).val(),
+                        priceWithIGV: 0,
+                        isActive: true
+                    });
+                });
+
+                console.log(productPrices);
+                $.post("@Url.Action("UpdateProductPrices","Product")", { productPrices : productPrices }, function (response) {
+                    var message = response;
+                     $.toast({
+                        heading: message.heading,
+                        text: message.text,
+                        position: message.position,
+                        loaderBg: message.loaderBg,
+                        icon: message.icon,
+                        hideAfter: message.hideAfter,
+                        stack: message.stack
+                            });
+
+                });
+
+        }); 
+
+
+        $('#update_technical_details').click(function () {
+
+            var product = new FormData();
+
+            product.append("id", $('#productId').val());
+            product.append("name", $('#name').val());
+            product.append("identifierCode", $('#identifierCode').val());
+            product.append("category", $('#category').val());
+            product.append("width", $('#width').val());
+            product.append("height", $('#height').val());
+            product.append("depth", $('#depth').val());
+            product.append("weight", $('#weight').val());
+            product.append("manufacturingTime", $('#manufacturingTime').val());
+            product.append("description", $('#description').val());
+            product.append("woodTypeId", $('#woodTypeId').val());
+            product.append("woodProtectionTypeId", $('#woodProtectionTypeId').val());
+            product.append("categoryId", $('#categoryId').val());
+            product.append("subCategoryId", $('#subCategoryId option:selected').val());
+
+            console.log($('#subCategoryId'));
+
+            $.ajax({
+                method: 'post',
+                processData: false,
+                contentType: false,
+                cache: false,
+                data: product,
+                url: '@Url.Action("UpdateTechnicalDetails","Product")',
+                success: function (response) {
+                    var message = response;
+                    $.toast({
+                        heading: message.heading,
+                        text: message.text,
+                        position: message.position,
+                        loaderBg: message.loaderBg,
+                        icon: message.icon,
+                        hideAfter: message.hideAfter,
+                        stack: message.stack
+                    });
+                }
+            });
+
+        });
+
+
+
+
+    </script>
+    }
+
