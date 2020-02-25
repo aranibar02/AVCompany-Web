@@ -5,9 +5,13 @@ using System.Web;
 using System.Web.Mvc;
 using AVcompanyWeb.Models;
 using AVcompanyWeb.Repositories;
+using AVcompanyWeb.Attributes;
+using AVcompanyWeb.ViewModels;
+using AutoMapper;
 
 namespace AVcompanyWeb.Controllers
 {
+    [SessionTimeout]
     public class WoodTypeController : Controller
     {
 
@@ -49,7 +53,8 @@ namespace AVcompanyWeb.Controllers
         public JsonResult GetWoodType(int id)
         {
             WoodType woodType = woodTypeRepository.FindBy(x => x.id == id && x.isActive == true).FirstOrDefault();
-            return Json(woodType, JsonRequestBehavior.AllowGet);
+            WoodTypeViewModel woodTypeViewModel = Mapper.Map<WoodType, WoodTypeViewModel>(woodType);
+            return Json(woodTypeViewModel, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

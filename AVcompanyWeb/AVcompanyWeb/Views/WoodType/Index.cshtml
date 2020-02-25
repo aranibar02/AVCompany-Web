@@ -20,9 +20,8 @@
 <div class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="mySmallModalLabel" style="">Tipo de Madera</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <div class="modal-header" style="display:block">
+                <h4 class="modal-title" id="mySmallModalLabel" style="text-align:center;font-weight:bolder">Crear Nuevo</h4>
             </div>
             <div class="modal-body">
                 <form>
@@ -68,7 +67,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Tabla de tipos de madera</h4>
-                <h6 class="card-subtitle">show the list of wood types</h6>
+                <h6 class="card-subtitle">Muestra el listado de los tipos de madera</h6>
                 <!-- Accordian -->
                 <table data-toggle="table"
                        data-search="true"
@@ -110,13 +109,16 @@
 
         $(document).ready(function () {
             $('#newWoodType').click(function () {
-            $('.bs-example-modal-sm').modal('show');
-            $('#btnWoodType').addClass('createWT').removeClass('editWT');
+                $('.bs-example-modal-sm').modal('show');
+                $('#mySmallModalLabel').text("Crear nuevo");
+                $('#btnWoodType').addClass('createWT').removeClass('editWT');
         });
 
         $('.edit').click(function () {
             var woodTypeId = $(this).attr('data-woodType');
-            console.log(woodTypeId);
+            
+            $('#mySmallModalLabel').text("Editar");
+
             $.get('@Url.Action("GetWoodType","WoodType")', { id: woodTypeId }, function (response) {
                 $('#woodType-description').val(response.description);
                 $('#woodType-id').val(response.id);

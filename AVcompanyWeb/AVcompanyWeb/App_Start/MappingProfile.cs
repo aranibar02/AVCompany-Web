@@ -17,6 +17,8 @@ namespace AVcompanyWeb.App_Start
             CreateMap<UploadViewModel, Upload>().ReverseMap();
             CreateMap<SubCategoryViewModel, SubCategory>().ReverseMap();
             CreateMap<PriceType, PriceTypeViewModel>().ReverseMap();
+            CreateMap<WoodProtectionType, WoodProtectionTypeViewModel>().ReverseMap();
+            CreateMap<WoodType, WoodType>().ReverseMap();
         }
     }
 }

@@ -71,7 +71,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Tabla de precios</h4>
-                <h6 class="card-subtitle">show the list of prices type</h6>
+                <h6 class="card-subtitle">Muestra el listado de los tipos de precios.</h6>
                 <!-- Accordian -->
                 <table data-toggle="table"
                        data-search="true"
@@ -115,13 +115,16 @@
 
         $(document).ready(function () {
             $('#newPriceType').click(function () {
-            $('.bs-example-modal-sm').modal('show');
-            $('#btnPriceType').addClass('createPT').removeClass('editPT');
+
+                $('#mySmallModalLabel').text("Crear nuevo");
+                $('.bs-example-modal-sm').modal('show');
+                $('#btnPriceType').addClass('createPT').removeClass('editPT');
         });
 
         $('.edit').click(function () {
             var priceTypeId = $(this).attr('data-priceType');
-            console.log(priceTypeId);
+            $('#mySmallModalLabel').text("Editar");
+
             $.get('@Url.Action("GetPriceType","PriceType")', { id: priceTypeId }, function (response) {
                 console.log(response);
                 $('#priceType-description').val(response.description);

@@ -57,9 +57,9 @@ namespace AVcompanyWeb.ViewModels
             priceTypeRepository = new PriceTypeRepository();
             customerRepository = new CustomerRepository();
 
-            this.categories = categoryRepository.GetAll().ToList();
-            this.woodTypes = woodTypeRepository.GetAll().ToList();
-            this.woodProtectionTypes = woodProtectionTypeRepository.GetAll().ToList();
+            this.categories = categoryRepository.FindBy(x => x.isActive == true).ToList();
+            this.woodTypes = woodTypeRepository.FindBy(x => x.isActive == true).ToList();
+            this.woodProtectionTypes = woodProtectionTypeRepository.FindBy(x => x.isActive == true).ToList();
             this.priceTypes = priceTypeRepository.FindBy(x => x.isActive == true).ToList();
             this.customers = customerRepository.FindBy(x => x.isActive == true).ToList();
         }

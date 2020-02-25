@@ -7,9 +7,11 @@ using AVcompanyWeb.Models;
 using AVcompanyWeb.Repositories;
 using AVcompanyWeb.ViewModels;
 using AutoMapper;
+using AVcompanyWeb.Attributes;
 
 namespace AVcompanyWeb.Controllers
 {
+    [SessionTimeout]
     public class PriceTypeController : Controller
     {
         private PriceTypeRepository priceTypeRepository;

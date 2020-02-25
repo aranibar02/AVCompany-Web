@@ -230,6 +230,8 @@
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\SubCategoryViewModel.cs" />
     <Compile Include="ViewModels\UploadViewModel.cs" />
+    <Compile Include="ViewModels\WoodProtectionTypeViewModel.cs" />
+    <Compile Include="ViewModels\WoodTypeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\AVCompanyCSS\all.css" />

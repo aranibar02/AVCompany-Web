@@ -5,9 +5,13 @@ using System.Web;
 using System.Web.Mvc;
 using AVcompanyWeb.Models;
 using AVcompanyWeb.Repositories;
+using AVcompanyWeb.Attributes;
+using AVcompanyWeb.ViewModels;
+using AutoMapper;
 
 namespace AVcompanyWeb.Controllers
 {
+    [SessionTimeout]
     public class WoodProtectionTypeController : Controller
     {
 
@@ -31,14 +35,14 @@ namespace AVcompanyWeb.Controllers
             woodProtectionTypeRepository.Edit(woodProtectionType);
             woodProtectionTypeRepository.Save();
 
-            return RedirectToAction("List", "WoodTypeProtection");
+            return RedirectToAction("List", "WoodProtectionType");
         }
 
 
         [HttpPost]
         public JsonResult Create(WoodProtectionType woodProtectionType)
         {
-            woodProtectionType.isActive = false;
+            woodProtectionType.isActive = true;
             woodProtectionTypeRepository.Add(woodProtectionType);
             woodProtectionTypeRepository.Save();
             return Json("Ok", JsonRequestBehavior.AllowGet);
@@ -48,7 +52,8 @@ namespace AVcompanyWeb.Controllers
         public JsonResult GetWoodProtectionType(int id)
         {
             WoodProtectionType woodProtectionType = woodProtectionTypeRepository.FindBy(x => x.id == id && x.isActive == true).FirstOrDefault();
-            return Json(woodProtectionType, JsonRequestBehavior.AllowGet);
+            WoodProtectionTypeViewModel woodProtectionTypeViewModel = Mapper.Map<WoodProtectionType, WoodProtectionTypeViewModel>(woodProtectionType);
+            return Json(woodProtectionTypeViewModel, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

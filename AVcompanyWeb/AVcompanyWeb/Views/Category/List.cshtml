@@ -63,7 +63,7 @@
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
                 <li class="breadcrumb-item active">Categorias</li>
             </ol>
-            <a href="#" id="newCategory" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i>  Crear Nuevo</a>
+            <a href="#" id="newCategory" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Crear Nuevo</a>
         </div>
     </div>
 </div>
@@ -75,7 +75,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Tabla de categorias</h4>
-                <h6 class="card-subtitle">show the list of categories</h6>
+                <h6 class="card-subtitle">Muestra el listado de categorías.</h6>
                 <!-- Accordian -->
                 <table data-toggle="table"
                        data-search="true"
@@ -121,13 +121,16 @@
 
         $(document).ready(function () {
             $('#newCategory').click(function () {
-            $('.bs-example-modal-sm').modal('show');
-            $('#btnCategory').addClass('createCT').removeClass('editCT');
+                $('#mySmallModalLabel').text("Crear nuevo");
+                $('.bs-example-modal-sm').modal('show');
+                $('#btnCategory').addClass('createCT').removeClass('editCT');
         });
 
         $('.edit').click(function () {
             var categoryId = $(this).attr('data-category');
-            console.log(categoryId);
+
+            $('#mySmallModalLabel').text("Editar");
+            
             $.get('@Url.Action("GetCategory","Category")', { id: categoryId }, function (response) {
                 console.log(response);
                 $('#category-abbreviation').val(response.abbreviation);

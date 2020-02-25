@@ -51,13 +51,13 @@
 
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
-        <span class="icon-disc"></span><h4 class="text-themecolor" style="display:inline;padding-left:5px;">Listado de tipos de madera</h4>
+        <span class="icon-disc"></span><h4 class="text-themecolor" style="display:inline;padding-left:5px;">Listado de tipos de Acabado</h4>
     </div>
     <div class="col-md-7 align-self-center text-right">
         <div class="d-flex justify-content-end align-items-center">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                <li class="breadcrumb-item active">Tipos Madera</li>
+                <li class="breadcrumb-item active">Tipos Acabado</li>
             </ol>
             <a href="#" id="newWoodTypeProtection" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i>  Crear Nuevo</a>
         </div>
@@ -70,8 +70,8 @@
         <!-- Column -->
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Tabla de tipos de madera</h4>
-                <h6 class="card-subtitle">show the list of wood types</h6>
+                <h4 class="card-title">Tabla de tipos de Acabado</h4>
+                <h6 class="card-subtitle">Muestra el listado de los tipos de Acabado.</h6>
                 <!-- Accordian -->
                 <table data-toggle="table"
                        data-search="true"
@@ -115,13 +115,15 @@
 
         $(document).ready(function () {
             $('#newWoodTypeProtection').click(function () {
-            $('.bs-example-modal-sm').modal('show');
-            $('#btnWoodTypeProtection').addClass('createWTP').removeClass('editWTP');
+                $('#mySmallModalLabel').text("Crear nuevo");
+                $('.bs-example-modal-sm').modal('show');
+                $('#btnWoodTypeProtection').addClass('createWTP').removeClass('editWTP');
         });
 
         $('.edit').click(function () {
             var woodTypeProtectionId = $(this).attr('data-woodProtectionType');
-            console.log(woodTypeProtectionId);
+
+            $('#mySmallModalLabel').text("Editar");
             $.get('@Url.Action("GetWoodProtectionType","WoodProtectionType")', { id: woodTypeProtectionId }, function (response) {
                 $('#woodTypeProtection-description').val(response.description);
                 $('#woodTypeProtection-id').val(response.id);
