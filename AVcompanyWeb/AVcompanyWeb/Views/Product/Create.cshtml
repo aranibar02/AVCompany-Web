@@ -138,6 +138,18 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div id="customer-section" class="form-group row" style="display:none">
+                                            <label for="example-time-input" class="col-2 col-form-label">Cliente</label>
+                                            <div class="col-10">
+                                                <select  id="customerId" class="select2 form-control custom-select" style="width: 100%; height:36px;">
+                                                    <option selected disabled>Select</option>
+                                                    @foreach (var item in Model.customers)
+                                                    {
+                                                        <option value="@item.Id">@item.companyName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>                                       
                                         <div class="form-group row">
                                             <label for="example-time-input" class="col-2 col-form-label">Descripción</label>
                                             <div class="col-10">
@@ -223,6 +235,7 @@
         var dropzoneFiles;
 
         $(document).ready(function () {
+            $('.select2').select2();
 
             Dropzone.forElement(".dropzone").options.autoProcessQueue = false;
             Dropzone.forElement(".dropzone").options.parallelUploads = 30;
@@ -242,11 +255,14 @@
             })
 
             $('.icheckbox_square-red').click(function () {
+
                 if ($(this).hasClass("checked")) {
                     $(this).removeClass('checked');
+                    $('#customer-section').css("display","none");
                     $('#isExclusive').val(false);
                 } else {
                     $(this).addClass('checked');
+                    $('#customer-section').css("display","flex");
                     $('#isExclusive').val(true);
                 }
                 
@@ -329,6 +345,7 @@
             product.append("categoryId", $('#categoryId').val());
             product.append("subCategoryId", $('#subCategoryId').val());
             product.append("isExclusive", $('#isExclusive').val());
+            product.append("CustomerId",$('#customerId').val());
 
 
             console.log($('#isExclusive').val());

@@ -8,9 +8,11 @@ using System.Web.Mvc;
 using AVcompanyWeb.ViewModels;
 using AutoMapper;
 using System.IO;
+using AVcompanyWeb.Attributes;
 
 namespace AVcompanyWeb.Controllers
 {
+    [SessionTimeout]
     public class ProductController : Controller
     {
         // GET: Product
@@ -104,16 +106,6 @@ namespace AVcompanyWeb.Controllers
         [HttpPost]
         public ActionResult Create(ProductViewModel model)
         {
-            MessageViewModel message = new MessageViewModel();
-            message.heading = "Welcome to Material Pro admin";
-            message.text = "Use the predefined ones, or specify a custom position object.";
-            message.position = "top-center";
-            message.loaderBg = "#ff6849";
-            message.icon = "info";
-            message.hideAfter = 3000;
-            message.stack = 6;
-
-            TempData["Message"] = message;
 
             Product product = productRepository.FindBy(x => x.isActive == true).OrderByDescending(x => x.id).Take(1).Single();
             string fName = "";
@@ -367,8 +359,8 @@ namespace AVcompanyWeb.Controllers
             priceProductRepository.Save();
 
             MessageViewModel message = new MessageViewModel();
-            message.heading = "Welcome to Material Pro admin";
-            message.text = "Use the predefined ones, or specify a custom position object.";
+            message.heading = "Operación Completada Satisfactoriamente.";
+            message.text = "Se actualizaron los precios del producto.";
             message.position = "top-center";
             message.loaderBg = "#ff6849";
             message.icon = "info";
@@ -383,13 +375,18 @@ namespace AVcompanyWeb.Controllers
         {
 
             Product product = Mapper.Map<ProductViewModel, Product>(productViewModel);
+            if ((bool)!product.isExclusive)
+            {
+                product.customerId = null;
+            }
+
             product.isActive = true;
             productRepository.Edit(product);
             productRepository.Save();
 
             MessageViewModel message = new MessageViewModel();
-            message.heading = "Welcome to Material Pro admin";
-            message.text = "Use the predefined ones, or specify a custom position object.";
+            message.heading = "Operación Completada Satisfactoriamente.";
+            message.text = "Se actualizó el producto con código " +  product.identifierCode + ".";
             message.position = "top-center";
             message.loaderBg = "#ff6849";
             message.icon = "info";

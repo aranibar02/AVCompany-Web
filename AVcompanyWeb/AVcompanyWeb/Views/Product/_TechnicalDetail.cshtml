@@ -94,8 +94,11 @@
                         <div class="input-group">
                             <ul class="icheck-list">
                                 <li>
-                                    <div class="icheckbox_square-red" style="position: relative;">
-                                        <input type="checkbox" value="1" class="check" id="square-checkbox-1" data-checkbox="icheckbox_square-red" style="position: absolute; opacity: 0;">
+                                    @{string ischecked = "";
+                                        if ((bool)Model.isExclusive) { ischecked = "checked"; }                                
+                                    }
+                                    <div class="icheckbox_square-red @ischecked" style="position: relative;">
+                                        <input type="checkbox" value="1" class="check" id="isExclusive" data-checkbox="icheckbox_square-red" style="position: absolute; opacity: 0;">
                                         <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
                                     </div>
                                     <label for="square-checkbox-1">Marcar casilla</label>
@@ -104,6 +107,25 @@
                         </div>
                     </div>
                 </div>
+                <div id="customer-section" class="form-group row" style="display:none">
+                    <label for="example-time-input" class="col-2 col-form-label">Cliente</label>
+                    <div class="col-10">
+                        <select id="customerId" class="select2 form-control custom-select" style="width: 100%; height:36px;">
+                            <option disabled>Select</option>
+                            @foreach (var item in Model.customers)
+                            {
+                                string isSelected = "";
+                                if (item.Id == Model.customerId)
+                                {
+                                    isSelected = "selected";
+                                }
+                                else { isSelected = ""; }
+                                <option value="@item.Id" @isSelected>@item.companyName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                
                 <div class="form-group row">
                     <div class="col-10">
                         <textarea name="description" id="description" rows="6" class="form-control" value="@Model.description">@Model.description</textarea>

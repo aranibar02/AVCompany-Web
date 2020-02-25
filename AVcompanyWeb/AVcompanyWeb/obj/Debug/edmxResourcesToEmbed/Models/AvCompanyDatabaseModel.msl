@@ -38,6 +38,7 @@
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="AVcompanydbModel.Product">
         <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="customerId" ColumnName="customerId" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="woodTypeId" ColumnName="woodTypeId" />
           <ScalarProperty Name="subCategoryId" ColumnName="subCategoryId" />
@@ -103,6 +104,45 @@
         <MappingFragment StoreEntitySet="Parameters">
           <ScalarProperty Name="value" ColumnName="value" />
           <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contacts">
+      <EntityTypeMapping TypeName="AVcompanydbModel.Contact">
+        <MappingFragment StoreEntitySet="Contacts">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="numberPhone" ColumnName="numberPhone" />
+          <ScalarProperty Name="dni" ColumnName="dni" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="customerId" ColumnName="customerId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="AVcompanydbModel.Customer">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="modificationUser" ColumnName="modificationUser" />
+          <ScalarProperty Name="creationUser" ColumnName="creationUser" />
+          <ScalarProperty Name="modificationDate" ColumnName="modificationDate" />
+          <ScalarProperty Name="creationDate" ColumnName="creationDate" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="ruc" ColumnName="ruc" />
+          <ScalarProperty Name="storeAddress" ColumnName="storeAddress" />
+          <ScalarProperty Name="companyName" ColumnName="companyName" />
+          <ScalarProperty Name="storeName" ColumnName="storeName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="AVcompanydbModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="username" ColumnName="username" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>

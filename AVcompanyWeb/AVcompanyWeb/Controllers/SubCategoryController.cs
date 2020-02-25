@@ -29,6 +29,7 @@ namespace AVcompanyWeb.Controllers
         public ActionResult List()
         {
             List<SubCategory> subCategories = subCategoryRepository.FindBy(x => x.isActive == true).ToList();
+
             return View(subCategories);
         }
 

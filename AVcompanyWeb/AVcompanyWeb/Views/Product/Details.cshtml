@@ -75,9 +75,46 @@
 @section Scripts
     {
     <script>
+
+        $(document).ready(function(){
+            $('.select2').select2();
+            
+            if($('.icheckbox_square-red').hasClass('checked'))
+            {
+                $('#isExclusive').val(true);
+                $('#customer-section').css("display","flex");
+            }else{
+                $('#isExclusive').val(false);
+                $('#customer-section').css("display","none");
+            }
+
+
+            $('.icheckbox_square-red').hover(function () {
+                $(this).addClass('hover');
+            })
+
+            $('.icheckbox_square-red').mouseout(function () {
+                $(this).removeClass('hover');
+            })
+
+            $('.icheckbox_square-red').click(function () {
+
+                if ($(this).hasClass("checked")) {
+                    $(this).removeClass('checked');
+                    $('#customer-section').css("display","none");
+                    $('#isExclusive').val(false);
+                } else {
+                    $(this).addClass('checked');
+                    $('#customer-section').css("display","flex");
+                    $('#isExclusive').val(true);
+                }
+                
+            })
+
+        });
+
+
         //delete image 
-
-
         $('.image-details').on('click','.delete',function () {
             var uploadId = $(this).attr("data-id");
                 console.log(uploadId);
@@ -212,8 +249,12 @@
             product.append("woodProtectionTypeId", $('#woodProtectionTypeId').val());
             product.append("categoryId", $('#categoryId').val());
             product.append("subCategoryId", $('#subCategoryId option:selected').val());
+            product.append("isExclusive", $('#isExclusive').val());
+            product.append("CustomerId",$('#customerId').val());
 
-            console.log($('#subCategoryId'));
+
+            console.log(product);
+
 
             $.ajax({
                 method: 'post',
@@ -237,9 +278,6 @@
             });
 
         });
-
-
-
 
     </script>
     }

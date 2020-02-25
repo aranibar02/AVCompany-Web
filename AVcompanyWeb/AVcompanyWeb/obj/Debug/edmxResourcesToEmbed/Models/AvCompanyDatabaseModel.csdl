@@ -59,6 +59,8 @@
     <NavigationProperty Name="WoodProtectionType" Relationship="Self.FK__Products__woodPr__5441852A" FromRole="Products" ToRole="WoodProtectionTypes" />
     <NavigationProperty Name="WoodType" Relationship="Self.FK__Products__woodTy__52593CB8" FromRole="Products" ToRole="WoodTypes" />
     <NavigationProperty Name="Uploads" Relationship="Self.FK__Uploads__product__571DF1D5" FromRole="Products" ToRole="Uploads" />
+    <Property Name="customerId" Type="Int32" />
+    <NavigationProperty Name="Customer" Relationship="AVcompanydbModel.FK_Products_Customers" FromRole="Product" ToRole="Customer" />
   </EntityType>
   <EntityType Name="SubCategory">
     <Key>
@@ -225,6 +227,17 @@
       <End Role="Uploads" EntitySet="Uploads" />
     </AssociationSet>
     <EntitySet Name="Parameters" EntityType="AVcompanydbModel.Parameter" />
+    <EntitySet Name="Contacts" EntityType="AVcompanydbModel.Contact" />
+    <EntitySet Name="Customers" EntityType="AVcompanydbModel.Customer" />
+    <AssociationSet Name="FK__Contacts__custom__2C3393D0" Association="AVcompanydbModel.FK__Contacts__custom__2C3393D0">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Contact" EntitySet="Contacts" />
+    </AssociationSet>
+    <EntitySet Name="Users" EntityType="AVcompanydbModel.User" />
+    <AssociationSet Name="FK_Products_Customers" Association="AVcompanydbModel.FK_Products_Customers">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Parameter">
     <Key>
@@ -234,4 +247,67 @@
     <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="value" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="Contact">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="customerId" Type="Int32" Nullable="false" />
+    <Property Name="firstName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="dni" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="numberPhone" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+    <Property Name="isActive" Type="Boolean" />
+    <NavigationProperty Name="Customer" Relationship="AVcompanydbModel.FK__Contacts__custom__2C3393D0" FromRole="Contact" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="storeName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="companyName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="storeAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="ruc" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
+    <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modificationDate" Type="DateTime" Precision="3" />
+    <Property Name="creationUser" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="modificationUser" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Contacts" Relationship="AVcompanydbModel.FK__Contacts__custom__2C3393D0" FromRole="Customer" ToRole="Contact" />
+    <NavigationProperty Name="Products" Relationship="AVcompanydbModel.FK_Products_Customers" FromRole="Customer" ToRole="Product" />
+  </EntityType>
+  <Association Name="FK__Contacts__custom__2C3393D0">
+    <End Type="AVcompanydbModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="AVcompanydbModel.Contact" Role="Contact" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Contact">
+        <PropertyRef Name="customerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Products_Customers">
+    <End Type="AVcompanydbModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="AVcompanydbModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="customerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

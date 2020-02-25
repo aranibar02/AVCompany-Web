@@ -36,6 +36,7 @@ namespace AVcompanyWeb.Models
         public Nullable<double> manufacturingTime { get; set; }
         public Nullable<bool> isExclusive { get; set; }
         public Nullable<bool> isActive { get; set; }
+        public Nullable<int> customerId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PriceProduct> PriceProducts { get; set; }
@@ -44,5 +45,6 @@ namespace AVcompanyWeb.Models
         public virtual WoodType WoodType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Upload> Uploads { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

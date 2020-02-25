@@ -14,6 +14,7 @@ namespace AVcompanyWeb.ViewModels
         //public Nullable<int> categoryId { get;set; }
         public Nullable<int> subCategoryId { get; set; }
         public Nullable<int> woodProtectionTypeId { get; set; }
+        public Nullable<int> customerId { get; set; }
         public string identifierCode { get; set; }
         public string name { get; set; }
         public string description { get; set; }
@@ -37,6 +38,7 @@ namespace AVcompanyWeb.ViewModels
         public List<Upload> uploads { get; set; }
         public List<PriceType> priceTypes { get; set;}
         public List<PriceProduct> priceProducts { get; set; }
+        public List<Customer> customers { get; set; }
         /**/
 
         /**required repositories**/
@@ -44,6 +46,7 @@ namespace AVcompanyWeb.ViewModels
         private CategoryRepository categoryRepository;
         private WoodProtectionTypeRepository woodProtectionTypeRepository;
         private PriceTypeRepository priceTypeRepository;
+        private CustomerRepository customerRepository;
         /**/
 
         public void loadData()
@@ -52,11 +55,13 @@ namespace AVcompanyWeb.ViewModels
             categoryRepository = new CategoryRepository();
             woodProtectionTypeRepository = new WoodProtectionTypeRepository();
             priceTypeRepository = new PriceTypeRepository();
+            customerRepository = new CustomerRepository();
 
             this.categories = categoryRepository.GetAll().ToList();
             this.woodTypes = woodTypeRepository.GetAll().ToList();
             this.woodProtectionTypes = woodProtectionTypeRepository.GetAll().ToList();
             this.priceTypes = priceTypeRepository.FindBy(x => x.isActive == true).ToList();
+            this.customers = customerRepository.FindBy(x => x.isActive == true).ToList();
         }
 
 

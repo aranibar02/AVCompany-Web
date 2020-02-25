@@ -16,6 +16,33 @@
           <Property Name="abbreviation" Type="varchar" MaxLength="3" />
           <Property Name="quantity" Type="int" />
         </EntityType>
+        <EntityType Name="Contacts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="customerId" Type="int" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="200" />
+          <Property Name="LastName" Type="varchar" MaxLength="200" />
+          <Property Name="dni" Type="varchar" MaxLength="8" />
+          <Property Name="numberPhone" Type="varchar" MaxLength="9" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="storeName" Type="varchar" MaxLength="500" />
+          <Property Name="companyName" Type="varchar" MaxLength="500" />
+          <Property Name="storeAddress" Type="varchar" MaxLength="500" />
+          <Property Name="ruc" Type="varchar" MaxLength="21" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+          <Property Name="creationDate" Type="datetime" Nullable="false" />
+          <Property Name="modificationDate" Type="datetime" />
+          <Property Name="creationUser" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="modificationUser" Type="varchar" MaxLength="200" />
+        </EntityType>
         <EntityType Name="Parameters">
           <Key>
             <PropertyRef Name="id" />
@@ -52,6 +79,7 @@
           <Property Name="woodTypeId" Type="int" />
           <Property Name="subCategoryId" Type="int" />
           <Property Name="woodProtectionTypeId" Type="int" />
+          <Property Name="customerId" Type="int" />
           <Property Name="identifierCode" Type="varchar(max)" />
           <Property Name="name" Type="varchar" MaxLength="200" />
           <Property Name="description" Type="varchar(max)" />
@@ -85,6 +113,15 @@
           <Property Name="isActive" Type="bit" />
           <Property Name="srcImage" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="WoodProtectionTypes">
           <Key>
             <PropertyRef Name="id" />
@@ -102,7 +139,19 @@
           <Property Name="description" Type="varchar" MaxLength="200" />
           <Property Name="isActive" Type="bit" />
         </EntityType>
-        <Association Name="FK__PriceProd__price__5CD6CB2B">
+        <Association Name="FK__Contacts__custom__2C3393D0">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contacts">
+              <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PriceProd__price__2D27B809">
           <End Role="PriceTypes" Type="Self.PriceTypes" Multiplicity="0..1" />
           <End Role="PriceProducts" Type="Self.PriceProducts" Multiplicity="*" />
           <ReferentialConstraint>
@@ -114,7 +163,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PriceProd__produ__5BE2A6F2">
+        <Association Name="FK__PriceProd__produ__2E1BDC42">
           <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
           <End Role="PriceProducts" Type="Self.PriceProducts" Multiplicity="*" />
           <ReferentialConstraint>
@@ -126,7 +175,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products__subCat__534D60F1">
+        <Association Name="FK__Products__subCat__2F10007B">
           <End Role="SubCategories" Type="Self.SubCategories" Multiplicity="0..1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
@@ -138,7 +187,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products__woodPr__5441852A">
+        <Association Name="FK__Products__woodPr__300424B4">
           <End Role="WoodProtectionTypes" Type="Self.WoodProtectionTypes" Multiplicity="0..1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
@@ -150,7 +199,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products__woodTy__52593CB8">
+        <Association Name="FK__Products__woodTy__30F848ED">
           <End Role="WoodTypes" Type="Self.WoodTypes" Multiplicity="0..1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
@@ -162,7 +211,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SubCatego__categ__4D94879B">
+        <Association Name="FK__SubCatego__categ__31EC6D26">
           <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
           <End Role="SubCategories" Type="Self.SubCategories" Multiplicity="*" />
           <ReferentialConstraint>
@@ -174,7 +223,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Uploads__product__571DF1D5">
+        <Association Name="FK__Uploads__product__33D4B598">
           <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
           <End Role="Uploads" Type="Self.Uploads" Multiplicity="*" />
           <ReferentialConstraint>
@@ -186,43 +235,66 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Products_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="AVcompanydbModelStoreContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Parameters" EntityType="Self.Parameters" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PriceProducts" EntityType="Self.PriceProducts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PriceTypes" EntityType="Self.PriceTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubCategories" EntityType="Self.SubCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Uploads" EntityType="Self.Uploads" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WoodProtectionTypes" EntityType="Self.WoodProtectionTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WoodTypes" EntityType="Self.WoodTypes" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__PriceProd__price__5CD6CB2B" Association="Self.FK__PriceProd__price__5CD6CB2B">
+          <AssociationSet Name="FK__Contacts__custom__2C3393D0" Association="Self.FK__Contacts__custom__2C3393D0">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Contacts" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PriceProd__price__2D27B809" Association="Self.FK__PriceProd__price__2D27B809">
             <End Role="PriceTypes" EntitySet="PriceTypes" />
             <End Role="PriceProducts" EntitySet="PriceProducts" />
           </AssociationSet>
-          <AssociationSet Name="FK__PriceProd__produ__5BE2A6F2" Association="Self.FK__PriceProd__produ__5BE2A6F2">
+          <AssociationSet Name="FK__PriceProd__produ__2E1BDC42" Association="Self.FK__PriceProd__produ__2E1BDC42">
             <End Role="Products" EntitySet="Products" />
             <End Role="PriceProducts" EntitySet="PriceProducts" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products__subCat__534D60F1" Association="Self.FK__Products__subCat__534D60F1">
+          <AssociationSet Name="FK__Products__subCat__2F10007B" Association="Self.FK__Products__subCat__2F10007B">
             <End Role="SubCategories" EntitySet="SubCategories" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products__woodPr__5441852A" Association="Self.FK__Products__woodPr__5441852A">
+          <AssociationSet Name="FK__Products__woodPr__300424B4" Association="Self.FK__Products__woodPr__300424B4">
             <End Role="WoodProtectionTypes" EntitySet="WoodProtectionTypes" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products__woodTy__52593CB8" Association="Self.FK__Products__woodTy__52593CB8">
+          <AssociationSet Name="FK__Products__woodTy__30F848ED" Association="Self.FK__Products__woodTy__30F848ED">
             <End Role="WoodTypes" EntitySet="WoodTypes" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK__SubCatego__categ__4D94879B" Association="Self.FK__SubCatego__categ__4D94879B">
+          <AssociationSet Name="FK__SubCatego__categ__31EC6D26" Association="Self.FK__SubCatego__categ__31EC6D26">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="SubCategories" EntitySet="SubCategories" />
           </AssociationSet>
-          <AssociationSet Name="FK__Uploads__product__571DF1D5" Association="Self.FK__Uploads__product__571DF1D5">
+          <AssociationSet Name="FK__Uploads__product__33D4B598" Association="Self.FK__Uploads__product__33D4B598">
             <End Role="Products" EntitySet="Products" />
             <End Role="Uploads" EntitySet="Uploads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Customers" Association="Self.FK_Products_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Products" EntitySet="Products" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -288,6 +360,8 @@
           <NavigationProperty Name="WoodProtectionType" Relationship="Self.FK__Products__woodPr__5441852A" FromRole="Products" ToRole="WoodProtectionTypes" />
           <NavigationProperty Name="WoodType" Relationship="Self.FK__Products__woodTy__52593CB8" FromRole="Products" ToRole="WoodTypes" />
           <NavigationProperty Name="Uploads" Relationship="Self.FK__Uploads__product__571DF1D5" FromRole="Products" ToRole="Uploads" />
+          <Property Name="customerId" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="AVcompanydbModel.FK_Products_Customers" FromRole="Product" ToRole="Customer" />
         </EntityType>
         <EntityType Name="SubCategory">
           <Key>
@@ -454,6 +528,17 @@
             <End Role="Uploads" EntitySet="Uploads" />
           </AssociationSet>
           <EntitySet Name="Parameters" EntityType="AVcompanydbModel.Parameter" />
+          <EntitySet Name="Contacts" EntityType="AVcompanydbModel.Contact" />
+          <EntitySet Name="Customers" EntityType="AVcompanydbModel.Customer" />
+          <AssociationSet Name="FK__Contacts__custom__2C3393D0" Association="AVcompanydbModel.FK__Contacts__custom__2C3393D0">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Contact" EntitySet="Contacts" />
+          </AssociationSet>
+          <EntitySet Name="Users" EntityType="AVcompanydbModel.User" />
+          <AssociationSet Name="FK_Products_Customers" Association="AVcompanydbModel.FK_Products_Customers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Parameter">
           <Key>
@@ -463,6 +548,69 @@
           <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="value" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="customerId" Type="Int32" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="dni" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="numberPhone" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="Customer" Relationship="AVcompanydbModel.FK__Contacts__custom__2C3393D0" FromRole="Contact" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="storeName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="companyName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="storeAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ruc" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+          <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modificationDate" Type="DateTime" Precision="3" />
+          <Property Name="creationUser" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="modificationUser" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Contacts" Relationship="AVcompanydbModel.FK__Contacts__custom__2C3393D0" FromRole="Customer" ToRole="Contact" />
+          <NavigationProperty Name="Products" Relationship="AVcompanydbModel.FK_Products_Customers" FromRole="Customer" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK__Contacts__custom__2C3393D0">
+          <End Type="AVcompanydbModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="AVcompanydbModel.Contact" Role="Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Products_Customers">
+          <End Type="AVcompanydbModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="AVcompanydbModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -506,6 +654,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="AVcompanydbModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="customerId" ColumnName="customerId" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="woodTypeId" ColumnName="woodTypeId" />
                 <ScalarProperty Name="subCategoryId" ColumnName="subCategoryId" />
@@ -571,6 +720,45 @@
               <MappingFragment StoreEntitySet="Parameters">
                 <ScalarProperty Name="value" ColumnName="value" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="AVcompanydbModel.Contact">
+              <MappingFragment StoreEntitySet="Contacts">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="numberPhone" ColumnName="numberPhone" />
+                <ScalarProperty Name="dni" ColumnName="dni" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="customerId" ColumnName="customerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="AVcompanydbModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="modificationUser" ColumnName="modificationUser" />
+                <ScalarProperty Name="creationUser" ColumnName="creationUser" />
+                <ScalarProperty Name="modificationDate" ColumnName="modificationDate" />
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="ruc" ColumnName="ruc" />
+                <ScalarProperty Name="storeAddress" ColumnName="storeAddress" />
+                <ScalarProperty Name="companyName" ColumnName="companyName" />
+                <ScalarProperty Name="storeName" ColumnName="storeName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="AVcompanydbModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

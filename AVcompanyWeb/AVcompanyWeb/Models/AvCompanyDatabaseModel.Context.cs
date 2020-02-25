@@ -34,5 +34,8 @@ namespace AVcompanyWeb.Models
         public virtual DbSet<WoodProtectionType> WoodProtectionTypes { get; set; }
         public virtual DbSet<WoodType> WoodTypes { get; set; }
         public virtual DbSet<Parameter> Parameters { get; set; }
+        public virtual DbSet<Contact> Contacts { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

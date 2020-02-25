@@ -21,6 +21,11 @@
         <AssociationConnector Association="AVcompanydbModel.FK__Products__woodTy__52593CB8" ManuallyRouted="false" />
         <AssociationConnector Association="AVcompanydbModel.FK__Uploads__product__571DF1D5" ManuallyRouted="false" />
         <EntityTypeShape EntityType="AVcompanydbModel.Parameter" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="AVcompanydbModel.Contact" Width="1.5" PointX="13" PointY="1.25" />
+        <EntityTypeShape EntityType="AVcompanydbModel.Customer" Width="1.5" PointX="10.75" PointY="1" />
+        <AssociationConnector Association="AVcompanydbModel.FK__Contacts__custom__2C3393D0" />
+        <EntityTypeShape EntityType="AVcompanydbModel.User" Width="1.5" PointX="0.75" PointY="10.75" />
+        <AssociationConnector Association="AVcompanydbModel.FK_Products_Customers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -135,11 +135,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\MappingProfile.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Attributes\SessionTimeoutAttribute .cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PriceTypeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SubCategoryController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WoodProtectionTypeController.cs" />
     <Compile Include="Controllers\WoodTypeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -163,6 +165,12 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>AvCompanyDatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Contact.cs">
+      <DependentUpon>AvCompanyDatabaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Customer.cs">
+      <DependentUpon>AvCompanyDatabaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Parameter.cs">
       <DependentUpon>AvCompanyDatabaseModel.tt</DependentUpon>
     </Compile>
@@ -181,6 +189,9 @@
     <Compile Include="Models\Upload.cs">
       <DependentUpon>AvCompanyDatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>AvCompanyDatabaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\WoodProtectionType.cs">
       <DependentUpon>AvCompanyDatabaseModel.tt</DependentUpon>
     </Compile>
@@ -190,13 +201,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\CategoryRepository.cs" />
+    <Compile Include="Repositories\CustomerRepository.cs" />
     <Compile Include="Repositories\IBaseRepository.cs" />
     <Compile Include="Repositories\ICategoryRepository.cs" />
+    <Compile Include="Repositories\ICustomerRepository.cs" />
     <Compile Include="Repositories\IParameterRepository.cs" />
     <Compile Include="Repositories\IPriceProductRepository.cs" />
     <Compile Include="Repositories\IPriceTypeRepository.cs" />
     <Compile Include="Repositories\IProductRepository.cs" />
     <Compile Include="Repositories\ISubCategoryRepository.cs" />
+    <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\IWoodProtectionTypeRepository.cs" />
     <Compile Include="Repositories\IWoodTypeRepository.cs" />
     <Compile Include="Repositories\ParameterRepository.cs" />
@@ -206,6 +220,7 @@
     <Compile Include="Repositories\SubCategoryRepository.cs" />
     <Compile Include="Repositories\IUploadRepository.cs" />
     <Compile Include="Repositories\UploadRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\WoodProtectionTypeRepository.cs" />
     <Compile Include="Repositories\WoodTypeRepository.cs" />
     <Compile Include="Utils\Imager.cs" />
@@ -229,6 +244,7 @@
     <Content Include="Content\AVCompanyCSS\futurico\futurico.css" />
     <Content Include="Content\AVCompanyCSS\jquery.toast.css" />
     <Content Include="Content\AVCompanyCSS\line\_all.css" />
+    <Content Include="Content\AVCompanyCSS\login-register-lock.css" />
     <Content Include="Content\AVCompanyCSS\magnific-popup.css" />
     <Content Include="Content\AVCompanyCSS\minimal\aero%402x.png" />
     <Content Include="Content\AVCompanyCSS\minimal\aero.png" />
@@ -253,6 +269,7 @@
     <Content Include="Content\AVCompanyCSS\morris.css" />
     <Content Include="Content\AVCompanyCSS\polaris\polaris.css" />
     <Content Include="Content\AVCompanyCSS\responsive.dataTables.min.css" />
+    <Content Include="Content\AVCompanyCSS\select2.min.css" />
     <Content Include="Content\AVCompanyCSS\square\aero%402x.png" />
     <Content Include="Content\AVCompanyCSS\square\aero.png" />
     <Content Include="Content\AVCompanyCSS\square\blue%402x.png" />
@@ -286,6 +303,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\icono-web.png" />
     <Content Include="Images\user-info.jpg" />
     <Content Include="Models\AvCompanyDatabaseModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -322,6 +340,7 @@
     <Content Include="Scripts\AVCompanyJS\popper.min.js" />
     <Content Include="Scripts\AVCompanyJS\Products.js" />
     <Content Include="Scripts\AVCompanyJS\raphael-min.js" />
+    <Content Include="Scripts\AVCompanyJS\select2.full.min.js" />
     <Content Include="Scripts\AVCompanyJS\sidebarmenu.js" />
     <Content Include="Scripts\AVCompanyJS\waves.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -403,10 +422,12 @@
     <Content Include="Views\PriceType\List.cshtml" />
     <Content Include="Views\Category\List.cshtml" />
     <Content Include="Views\SubCategory\List.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Uploads\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

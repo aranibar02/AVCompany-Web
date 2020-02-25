@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Kevin\Developments\AVcompanyWeb\AVcompanyWeb\Models\AvCompanyDatabaseModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Kevin Aranibar\2020\av-company\web project\AVCompany-Web\AVcompanyWeb\AVcompanyWeb\Models\AvCompanyDatabaseModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
