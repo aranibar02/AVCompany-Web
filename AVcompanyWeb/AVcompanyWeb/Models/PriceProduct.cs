@@ -20,6 +20,7 @@ namespace AVcompanyWeb.Models
         public Nullable<double> priceWithoutIGV { get; set; }
         public Nullable<double> priceWithIGV { get; set; }
         public Nullable<bool> isActive { get; set; }
+        public Nullable<bool> isSelected { get; set; }
     
         public virtual PriceType PriceType { get; set; }
         public virtual Product Product { get; set; }

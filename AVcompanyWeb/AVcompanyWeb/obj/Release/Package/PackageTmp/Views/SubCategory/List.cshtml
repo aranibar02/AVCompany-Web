@@ -1,0 +1,223 @@
+﻿@model  List<AVcompanyWeb.ViewModels.SubCategoryViewModel>
+
+<style>
+    .header-th {
+        background-color: #2b2b2b;
+        color: white;
+    }
+
+    .column-td {
+        background-color: white;
+    }
+
+    .column-icon {
+        color: #0384f3;
+        margin: 5px;
+    }
+</style>
+
+
+<div class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header" style="display:block">
+                <h4 class="modal-title" id="mySmallModalLabel" style="text-align:center;font-weight:bolder">Crear Nuevo</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Nombre</label>
+                        <input type="hidden" id="subCategory-id" />
+                        <input type="text" class="form-control" id="subCategory-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Categoria</label>
+                        <select class="custom-select" required id="categoryId">
+                            <option value="" disabled selected>Open this select menu</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Descripcion</label>
+                        <textarea type="text" class="form-control" id="subCategory-description" rows="2"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                <button type="button" id="btnSubCategory" class="btn btn-danger waves-effect waves-light">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <span class="icon-disc"></span><h4 class="text-themecolor" style="display:inline;padding-left:5px;">Listado de Subcategorías</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item active">SubCategorías</li>
+            </ol>
+            <a href="#" id="newSubCategory" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i>  Crear Nuevo</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12">
+        <!-- Column -->
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Tabla de Subcategorías</h4>
+                <h6 class="card-subtitle">Muestra la lista de Subcategorías</h6>
+                <!-- Accordian -->
+                <table data-toggle="table"
+                       data-search="true"
+                       data-show-columns="true"
+                       data-pagination="true">
+                    <thead>
+                        <tr>
+                            <th class="header-th" data-align="center">N°</th>
+                            <th class="header-th" data-align="center">Categoría</th>
+                            <th class="header-th" data-align="center">Nombre</th>
+                            <th class="header-th" data-align="center">Descripción</th>
+                            <th class="header-th" data-align="center">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{int contador = 0; }
+                        @foreach (var item in Model)
+                        {
+                            contador++;
+                            <tr>
+                                <td class="column-td">@contador</td>
+                                <td class="column-td">@item.category.name</td>
+                                <td class="column-td">@item.name</td>
+                                <td class="column-td">@item.description</td>
+                                <td class="column-td">
+                                    <a class="edit column-icon" data-subCategory="@item.id" href="#" title="Editar"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="remove column-icon" href="@Url.Action("Delete","SubCategory",new { id = item.id})" title="Eliminar"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+
+        $(document).ready(function () {
+            $('#newSubCategory').click(function () {
+
+                $('#mySmallModalLabel').text("Crear nuevo");
+                $.get('@Url.Action("GetCategories","SubCategory")',function(response){
+                    $('#categoryId').empty();
+                    $('#categoryId').append("<option disabled selected>Open this select menu</option>")
+                    $.each(response, function (index, value) {
+                        var option = document.createElement("option");
+                        console.log(response[index].name);
+                        option.text = response[index].name;
+                        option.value = response[index].id;                       
+                        $('#categoryId').append(option);
+                    });
+                    $('.bs-example-modal-sm').modal('show');
+                    $('#btnSubCategory').addClass('createSC').removeClass('editSC');
+                });
+            });
+
+        $('.edit').click(function () {
+            var subCategoryId = $(this).attr('data-subcategory');
+
+            $('#mySmallModalLabel').text("Editar");
+            $.get('@Url.Action("GetSubCategory","SubCategory")', { id: subCategoryId }, function (response) {
+                console.log(response);
+                $('#subCategory-description').val(response.description);
+                $('#subCategory-id').val(response.id);
+                $('#subCategory-name').val(response.name);
+                $('#categoryId').empty();
+                $('#categoryId').append("<option disabled>Open this select menu</option>")
+
+                $.each(response.categories, function (index, value) {
+                    var option = document.createElement("option");
+                    option.text = response.categories[index].name;
+                    option.value = response.categories[index].id;
+
+                    console.log("categoryId: "  + response.categoryId);
+                    console.log("ListId: " + response.categories[index].id);
+
+                    if (response.categoryId == response.categories[index].id) {
+                        option.setAttribute('selected', true);
+                        console.log("here");
+                    }
+                    $('#categoryId').append(option);
+                })
+
+
+
+                $('.bs-example-modal-sm').modal('show');
+                $('#subCategoryType').addClass('editSC').removeClass('createSC');
+            })
+        });
+
+
+            $('#btnSubCategory').click(function () {
+                var description = $('#subCategory-description').val();
+                var name = $('#subCategory-name').val();
+                var id = $('#subCategory-id').val();
+                var categoryId = $('#categoryId').val();
+
+
+                var subCategory = {
+                id: id,
+                name: name,
+                categoryId: categoryId,
+                description: description,
+                isActive : true
+                }
+
+
+            
+                if ($(this).hasClass('createSC')) {
+                    $.post('@Url.Action("Create","Subcategory")', { subCategory: subCategory }, function (response) {
+                    console.log(response);
+                    if (response == "Ok") {
+                        console.log(response);
+                        window.location.href = "@Url.Action("List","SubCategory")";
+                    }
+                })
+            } else {
+                    $.post('@Url.Action("Edit", "SubCategory")', { subCategory: subCategory }, function (response) {
+                    console.log(response);
+                    if (response == "Ok") {
+                        console.log(response);
+                        window.location.href = "@Url.Action("List", "SubCategory")";
+                    }
+                })
+            }
+        })
+
+        })
+
+    </script>
+}
+
+
+
+
+

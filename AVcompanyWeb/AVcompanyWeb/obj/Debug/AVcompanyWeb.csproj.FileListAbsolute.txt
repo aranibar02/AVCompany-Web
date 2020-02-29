@@ -163,6 +163,6 @@ C:\Kevin Aranibar\2020\av-company\web project\AVCompany-Web\AVcompanyWeb\AVcompa
 C:\Kevin Aranibar\2020\av-company\web project\AVCompany-Web\AVcompanyWeb\AVcompanyWeb\bin\Newtonsoft.Json.xml
 C:\Kevin Aranibar\2020\av-company\web project\AVCompany-Web\AVcompanyWeb\AVcompanyWeb\bin\Antlr3.Runtime.pdb
 C:\Kevin Aranibar\2020\av-company\web project\AVCompany-Web\AVcompanyWeb\AVcompanyWeb\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Kevin Aranibar\2020\av-company\web project\AVCompany-Web\AVcompanyWeb\AVcompanyWeb\obj\Debug\AVcompanyWeb.csprojResolveAssemblyReference.cache
 C:\Kevin Aranibar\2020\av-company\web project\AVCompany-Web\AVcompanyWeb\AVcompanyWeb\obj\Debug\AVcompanyWeb.dll
 C:\Kevin Aranibar\2020\av-company\web project\AVCompany-Web\AVcompanyWeb\AVcompanyWeb\obj\Debug\AVcompanyWeb.pdb
-C:\Kevin Aranibar\2020\av-company\web project\AVCompany-Web\AVcompanyWeb\AVcompanyWeb\obj\Debug\AVcompanyWeb.csprojResolveAssemblyReference.cache

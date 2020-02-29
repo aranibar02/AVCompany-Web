@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<div class="row page-titles">
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex  align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item">Categoria</li>
+                <li class="breadcrumb-item active">Nuevo</li>
+            </ol>
+            <!--<button type="button" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New</button>-->
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                
+                <span class="icon-note"></span><h5 class="card-title" style="display:inline;padding-left:8px">Crear Cateogoria</h5>
+                <br /><br />
+                      <form class="needs-validation" novalidate method="post" action="@Url.Action("Create","Category")">
+                          <div class="form-row">
+                              <div class="col-md-6">
+                                  <label for="name">Nombre</label>
+                                  <input type="text" class="form-control" id="name" placeholder="" required name="name">
+                                  <div class="invalid-feedback">
+                                      Nombre requerido!
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <label for="abbreviation">Codigo</label>
+                                  <input type="text" class="form-control" id="abbreviation" placeholder="" required name="abbreviation">
+                                  <div class="invalid-feedback">
+                                      Codigo requerido!
+                                  </div>
+                              </div>
+                           </div>
+                           <div class="form-row">
+                              <div class="col-md-12">
+                                  <label for="description">Descripcion</label>
+                                  <div class="input-group">
+                                      <textarea type="text" class="form-control" id="description" placeholder="" required rows="5" name="description"></textarea>
+                                      <div class="invalid-feedback">
+                                          Descripcion requerida!
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
+                          <br />
+                          <button class="btn btn-primary" type="submit">Submit form</button>
+                      </form>
+                <script>
+                                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                                (function() {
+                                    'use strict';
+                                    window.addEventListener('load', function() {
+                                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                        var forms = document.getElementsByClassName('needs-validation');
+                                        // Loop over them and prevent submission
+                                        var validation = Array.prototype.filter.call(forms, function(form) {
+                                            form.addEventListener('submit', function(event) {
+                                                if (form.checkValidity() === false) {
+                                                    event.preventDefault();
+                                                    event.stopPropagation();
+                                                }
+                                                form.classList.add('was-validated');
+                                            }, false);
+                                        });
+                                    }, false);
+                                })();
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+

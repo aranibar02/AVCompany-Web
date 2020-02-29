@@ -26,6 +26,7 @@ namespace AVcompanyWeb.ViewModels
         public Nullable<double> manufacturingTime { get; set; }
         public Nullable<bool> isExclusive { get; set; }
         public Nullable<bool> isActive { get; set; }
+        public Nullable<int> categoryId { get; set; }
 
         public CategoryViewModel category { get; set; }
         public SubCategoryViewModel subCategory { get; set; }
@@ -39,6 +40,7 @@ namespace AVcompanyWeb.ViewModels
         public List<PriceType> priceTypes { get; set;}
         public List<PriceProduct> priceProducts { get; set; }
         public List<Customer> customers { get; set; }
+        public List<SubCategory> subCategories { get; set; }
         /**/
 
         /**required repositories**/
@@ -47,6 +49,7 @@ namespace AVcompanyWeb.ViewModels
         private WoodProtectionTypeRepository woodProtectionTypeRepository;
         private PriceTypeRepository priceTypeRepository;
         private CustomerRepository customerRepository;
+        private SubCategoryRepository subCategoryRepository;
         /**/
 
         public void loadData()
@@ -56,12 +59,18 @@ namespace AVcompanyWeb.ViewModels
             woodProtectionTypeRepository = new WoodProtectionTypeRepository();
             priceTypeRepository = new PriceTypeRepository();
             customerRepository = new CustomerRepository();
+            subCategoryRepository = new SubCategoryRepository();
 
             this.categories = categoryRepository.FindBy(x => x.isActive == true).ToList();
             this.woodTypes = woodTypeRepository.FindBy(x => x.isActive == true).ToList();
             this.woodProtectionTypes = woodProtectionTypeRepository.FindBy(x => x.isActive == true).ToList();
             this.priceTypes = priceTypeRepository.FindBy(x => x.isActive == true).ToList();
             this.customers = customerRepository.FindBy(x => x.isActive == true).ToList();
+
+            if (categoryId != null)
+            {
+                this.subCategories = subCategoryRepository.FindBy(x => x.isActive == true && x.categoryId == this.categoryId).ToList();
+            }
         }
 
 

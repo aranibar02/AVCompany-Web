@@ -60,6 +60,7 @@ namespace AVcompanyWeb.Controllers
             {
                 product.isActive = true;
                 productRepository = new ProductRepository();
+                if (product.isExclusive == null) { product.isExclusive = false; }
                 Product productEntity = Mapper.Map<Product>(product);
                 productRepository.Add(productEntity);
                 productRepository.Save();
@@ -80,6 +81,10 @@ namespace AVcompanyWeb.Controllers
             {
                 PriceProduct priceProduct = null;
 
+
+
+
+
                 foreach (var item in productPrices)
                 {
                     priceProduct = new PriceProduct();
@@ -88,6 +93,7 @@ namespace AVcompanyWeb.Controllers
                     priceProduct.priceWithoutIGV = item.priceWithoutIGV;
                     priceProduct.priceWithIGV = item.priceWithIGV;
                     priceProduct.isActive = true;
+                    priceProduct.isSelected = item.isSelected;
 
                     priceProductRepository.Add(priceProduct);
                 }
@@ -164,7 +170,7 @@ namespace AVcompanyWeb.Controllers
         public JsonResult GetIdentifierCode(int categoryId)
         {
             categoryRepository = new CategoryRepository();
-            var category = categoryRepository.FindBy(x => x.id == categoryId && x.isActive == true).FirstOrDefault();
+            var category = categoryRepository.FindBy(x => x.id == categoryId).FirstOrDefault();
             string identifierCode = $"{category.abbreviation}{category.quantity + 1}";
             return Json(identifierCode, JsonRequestBehavior.AllowGet);
         }
@@ -178,8 +184,7 @@ namespace AVcompanyWeb.Controllers
             Product product = productRepository.FindBy(x => x.id == id && x.isActive == true).FirstOrDefault();
             ProductViewModel productViewModel = Mapper.Map<Product, ProductViewModel>(product);
 
-            int? categoryId = subCategoryRepository.FindBy(x => x.id == productViewModel.subCategoryId && x.isActive == true).FirstOrDefault().categoryId;
-            productViewModel.category = Mapper.Map<Category, CategoryViewModel>(categoryRepository.FindBy(x => x.id == categoryId && x.isActive == true).FirstOrDefault());
+            productViewModel.category = Mapper.Map<Category, CategoryViewModel>(categoryRepository.FindBy(x => x.id == product.categoryId && x.isActive == true).FirstOrDefault());
 
             productViewModel.loadData();
             productViewModel.uploads = uploadRepository.FindBy(x => x.productId == id && x.isActive == true).ToList();
@@ -244,7 +249,7 @@ namespace AVcompanyWeb.Controllers
             }
             else {
                 products = productRepository.FindBy(x => x.isActive == true &&
-                (x.name.IndexOf(text) >= 0 || x.description.IndexOf(text) >= 0 || x.SubCategory.Category.name.IndexOf(text) >= 0)).ToList();
+                (x.name.IndexOf(text) >= 0 || x.description.IndexOf(text) >= 0 || x.SubCategory.Category.name.IndexOf(text) >= 0) && x.identifierCode.IndexOf(text) >=0).ToList();
 
             }
 

@@ -1,0 +1,167 @@
+﻿@model  List<AVcompanyWeb.Models.WoodType>
+
+<style>
+    .header-th {
+        background-color: #2b2b2b;
+        color: white;
+    }
+
+    .column-td {
+        background-color: white;
+    }
+
+    .column-icon {
+        color: #0384f3;
+        margin: 5px;
+    }
+</style>
+
+
+<div class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header" style="display:block">
+                <h4 class="modal-title" id="mySmallModalLabel" style="text-align:center;font-weight:bolder">Crear Nuevo</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Descripción</label>
+                        <input type="hidden" id="woodType-id"/>
+                        <input type="text" class="form-control" id="woodType-description">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                <button type="button" id="btnWoodType" class="btn btn-danger waves-effect waves-light">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <span class="icon-disc"></span><h4 class="text-themecolor" style="display:inline;padding-left:5px;">Listado de tipos de madera</h4>
+    </div>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item active">Tipos Madera</li>
+            </ol>
+            <a href="#" id="newWoodType" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i>  Crear Nuevo</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12">
+        <!-- Column -->
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Tabla de tipos de madera</h4>
+                <h6 class="card-subtitle">Muestra el listado de los tipos de madera</h6>
+                <!-- Accordian -->
+                <table data-toggle="table"
+                       data-search="true"
+                       data-show-columns="true"
+                       data-pagination="true">
+                    <thead>
+                        <tr>
+                            <th class="header-th" data-align="center">N°</th>
+                            <th class="header-th" data-align="center">Descripción</th>
+                            <th class="header-th" data-align="center">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{int contador = 0; }
+                        @foreach (var item in Model)
+                        {
+                            contador++;
+                            <tr>
+                                <td class="column-td">@contador</td>
+                                <td class="column-td">@item.description</td>
+                                <td class="column-td">
+                                    <a class="edit column-icon"  data-woodType="@item.id"  href="#"  title="Editar"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="remove column-icon" href="@Url.Action("Delete","WoodType",new { id = item.id})" title="Eliminar"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+
+        $(document).ready(function () {
+            $('#newWoodType').click(function () {
+                $('.bs-example-modal-sm').modal('show');
+                $('#mySmallModalLabel').text("Crear nuevo");
+                $('#btnWoodType').addClass('createWT').removeClass('editWT');
+        });
+
+        $('.edit').click(function () {
+            var woodTypeId = $(this).attr('data-woodType');
+            
+            $('#mySmallModalLabel').text("Editar");
+
+            $.get('@Url.Action("GetWoodType","WoodType")', { id: woodTypeId }, function (response) {
+                $('#woodType-description').val(response.description);
+                $('#woodType-id').val(response.id);
+                $('.bs-example-modal-sm').modal('show');
+                $('#btnWoodType').addClass('editWT').removeClass('createWT');
+            })
+        });
+
+
+        $('#btnWoodType').click(function () {
+            var description = $('#woodType-description').val();
+            var id = $('#woodType-id').val();
+
+            console.log(description);
+
+            var woodType = {
+                id: id,
+                description: description,
+                isActive : true
+            }
+
+            if ($(this).hasClass('createWT')) {
+                $.post('@Url.Action("Create","WoodType")', { woodType: woodType }, function (response) {
+                    console.log(response);
+                    if (response == "Ok") {
+                        console.log(response);
+                        window.location.href = "@Url.Action("Index","WoodType")";
+                    }
+                })
+            } else {
+                $.post('@Url.Action("Edit","WoodType")', { woodType: woodType }, function (response) {
+                    console.log(response);
+                    if (response == "Ok") {
+                        console.log(response);
+                        window.location.href = "@Url.Action("Index","WoodType")";
+                    }
+                })       
+            }
+        })
+
+        })
+
+    </script>
+}
+
+

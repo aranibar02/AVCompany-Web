@@ -61,6 +61,7 @@
           <Property Name="priceWithoutIGV" Type="float" />
           <Property Name="priceWithIGV" Type="float" />
           <Property Name="isActive" Type="bit" />
+          <Property Name="isSelected" Type="bit" />
         </EntityType>
         <EntityType Name="PriceTypes">
           <Key>
@@ -91,6 +92,7 @@
           <Property Name="manufacturingTime" Type="float" />
           <Property Name="isExclusive" Type="bit" />
           <Property Name="isActive" Type="bit" />
+          <Property Name="categoryId" Type="int" />
         </EntityType>
         <EntityType Name="SubCategories">
           <Key>
@@ -325,6 +327,7 @@
           <Property Name="isActive" Type="Boolean" />
           <NavigationProperty Name="PriceType" Relationship="Self.FK__PriceProd__price__5CD6CB2B" FromRole="PriceProducts" ToRole="PriceTypes" />
           <NavigationProperty Name="Product" Relationship="Self.FK__PriceProd__produ__5BE2A6F2" FromRole="PriceProducts" ToRole="Products" />
+          <Property Name="isSelected" Type="Boolean" />
         </EntityType>
         <EntityType Name="PriceType">
           <Key>
@@ -362,6 +365,7 @@
           <NavigationProperty Name="Uploads" Relationship="Self.FK__Uploads__product__571DF1D5" FromRole="Products" ToRole="Uploads" />
           <Property Name="customerId" Type="Int32" />
           <NavigationProperty Name="Customer" Relationship="AVcompanydbModel.FK_Products_Customers" FromRole="Product" ToRole="Customer" />
+          <Property Name="categoryId" Type="Int32" />
         </EntityType>
         <EntityType Name="SubCategory">
           <Key>
@@ -632,6 +636,7 @@
           <EntitySetMapping Name="PriceProducts">
             <EntityTypeMapping TypeName="AVcompanydbModel.PriceProduct">
               <MappingFragment StoreEntitySet="PriceProducts">
+                <ScalarProperty Name="isSelected" ColumnName="isSelected" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="productId" ColumnName="productId" />
                 <ScalarProperty Name="priceTypeId" ColumnName="priceTypeId" />
@@ -654,6 +659,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="AVcompanydbModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="categoryId" ColumnName="categoryId" />
                 <ScalarProperty Name="customerId" ColumnName="customerId" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="woodTypeId" ColumnName="woodTypeId" />

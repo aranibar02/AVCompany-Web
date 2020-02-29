@@ -1,0 +1,25 @@
+﻿@model AVcompanyWeb.ViewModels.ProductViewModel
+<div class="row el-element-overlay">
+    
+    @foreach (var item in Model.uploads)
+    {
+        if (item.isActive == true)
+        {
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="el-card-item">
+                    <div class="el-card-avatar el-overlay-1">
+                        <img src="@item.srcImage" alt="user" style="width:300px;height:250px" />
+                        <div class="el-overlay">
+                            <ul class="el-info">
+                                <li><a class="btn default btn-outline image-popup-vertical-fit" href="@item.srcImage"><i class="icon-magnifier"></i></a></li>
+                                <li><a class="btn default btn-outline delete"  data-id="@item.id"><i class="icon-trash"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+           }
+        }
+</div>

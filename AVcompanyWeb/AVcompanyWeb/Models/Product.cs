@@ -37,6 +37,7 @@ namespace AVcompanyWeb.Models
         public Nullable<bool> isExclusive { get; set; }
         public Nullable<bool> isActive { get; set; }
         public Nullable<int> customerId { get; set; }
+        public Nullable<int> categoryId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PriceProduct> PriceProducts { get; set; }

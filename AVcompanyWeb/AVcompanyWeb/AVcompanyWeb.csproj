@@ -384,6 +384,7 @@
     <Content Include="fonts\AVCompanyFonts\fa-solid-900.ttf" />
     <Content Include="fonts\AVCompanyFonts\themify.eot" />
     <Content Include="fonts\AVCompanyFonts\themify.woff" />
+    <None Include="Properties\PublishProfiles\AVCompany-Web.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
